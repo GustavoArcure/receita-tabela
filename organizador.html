@@ -141,6 +141,7 @@
   <table id="tabelaResultado">
     <thead>
       <tr>
+        <th>Chave Agrup</th>
         <th>Medicamento</th>
         <th>Data</th>
         <th>Quantidade Vendida</th>
@@ -174,11 +175,16 @@
           const dataMatch = periodo.match(/DE (\d{2}\/\d{2}\/\d{4}) A/);
           const data = dataMatch ? dataMatch[1] : '';
 
+          const chaveAgrup = colunas[7]; // Chave Agrup
           const medicamento = colunas[8]; // Descrição do medicamento
           const qtde = parseInt(colunas[12]); // Quantidade vendida
 
           if (medicamento && data && qtde > 0) {
             const tr = document.createElement('tr');
+
+            const tdChave = document.createElement('td');
+            tdChave.textContent = chaveAgrup;
+            tr.appendChild(tdChave);
 
             const tdMed = document.createElement('td');
             tdMed.textContent = medicamento;
