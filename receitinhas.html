@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Receitinhas da Edi</title>
+  <link rel="icon" href="logo.png" type="image/png" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to top, #FFCCBC, #ffffff);
+      padding: 30px;
+      margin: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .logo-container {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .logo-container img {
+      height: 60px;
+      width: auto;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .input-container {
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 14px;
+      margin: 5px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    input[type="number"] {
+      width: 160px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #FF7043;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e64a19;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 0 auto;
+      font-size: 10pt;
+      width: 100%;
+      max-width: 700px;
+      background-color: white;
+    }
+
+    td {
+      border: 1px solid #000;
+      padding: 6px 10px;
+      text-align: center;
+    }
+
+    #tabelaContainer {
+      flex: 1;
+    }
+
+    footer {
+      background-color: #FF7043;
+      color: white;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+      margin-top: auto;
+    }
+
+    @media print {
+      .no-print, h2, footer {
+        display: none;
+      }
+
+      body {
+        background: white !important;
+      }
+
+      table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-container">
+    <img src="logo.png" alt="Logo da Farmácia" />
+  </div>
+
+  <h2>Receitinhas da Edi 💖</h2>
+
+  <div class="no-print">
+    <div class="input-container">
+      <input type="number" id="startNumber" placeholder="Número inicial" />
+      <button onclick="gerarTabela()">Gerar Tabela</button>
+      <button onclick="window.print()">Imprimir</button>
+      <button onclick="voltarMenu()">Voltar ao Menu</button>
+    </div>
+  </div>
+
+  <div id="tabelaContainer"></div>
+
+  <footer>
+    © 2025 Gustavo Bispo dos Santos. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    function gerarTabela() {
+      const start = parseInt(document.getElementById('startNumber').value);
+      if (isNaN(start)) {
+        alert("Por favor, insira um número válido.");
+        return;
+      }
+
+      const rows = 30;
+      const cols = 5;
+      const total = rows * cols;
+
+      const values = Array.from({ length: total }, (_, i) => start + i);
+
+      // Criar matriz para preencher verticalmente por coluna
+      const matrix = Array.from({ length: rows }, () => Array(cols).fill(''));
+      let index = 0;
+
+      for (let col = 0; col < cols; col++) {
+        for (let row = 0; row < rows; row++) {
+          matrix[row][col] = values[index++];
+        }
+      }
+
+      // Montar tabela HTML
+      let html = '<table>';
+      for (let row = 0; row < rows; row++) {
+        html += '<tr>';
+        for (let col = 0; col < cols; col++) {
+          html += `<td>${matrix[row][col]}</td>`;
+        }
+        html += '</tr>';
+      }
+      html += '</table>';
+
+      document.getElementById('tabelaContainer').innerHTML = html;
+    }
+
+    function voltarMenu() {
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>
